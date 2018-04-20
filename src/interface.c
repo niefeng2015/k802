@@ -5216,7 +5216,9 @@ int oracleh_parse_hash (u8 *input_buf, u32 input_len, hash_t *hash_buf, MAYBE_UN
   digest[1] = hex_to_u32 ((const u8 *) &input_buf[ 8]);
   digest[2] = 0;
   digest[3] = 0;
-
+//chenxi
+ printf("digest:%08x,%08x\n",digest[0],digest[1]);
+ printf("digest:%d,%d\n",digest[0],digest[1]);
   if (input_buf[16] != hashconfig->separator) return (PARSER_SEPARATOR_UNMATCHED);
 
   u32 salt_len = input_len - 16 - 1;
@@ -5227,10 +5229,15 @@ int oracleh_parse_hash (u8 *input_buf, u32 input_len, hash_t *hash_buf, MAYBE_UN
 
   salt_len = parse_and_store_salt (salt_buf_ptr, salt_buf, salt_len, hashconfig);
 
+ printf("salt_buf:%08x,%08x,%08x,%08x,%08x,%08x,%08x,%08x,%08x,%08x\n",salt_buf[0],salt_buf[1],salt_buf[2],salt_buf[3],salt_buf[4],salt_buf[5],salt_buf[6],salt_buf[7],salt_buf[8],salt_buf[9],salt_buf[10]);
+ 
+printf("salt_buf_ptr:%08x,%08x,%08x\n",salt_buf_ptr[0],salt_buf_ptr[1],salt_buf_ptr[2]);
+
   if (salt_len == UINT_MAX) return (PARSER_SALT_LENGTH);
 
   salt->salt_len = salt_len;
-
+//chenxi
+printf("salt_len:%d\n",salt_len);
   return (PARSER_OK);
 }
 
@@ -10999,9 +11006,10 @@ int pdf17l3_parse_hash (u8 *input_buf, u32 input_len, hash_t *hash_buf, MAYBE_UN
   u32 *digest = (u32 *) hash_buf->digest;
 
   salt_t *salt = hash_buf->salt;
-
+  printf("[DEBUGINFO] IN pdf17l3_parse_hash func\n");
   if (hashconfig->opti_type & OPTI_TYPE_PRECOMPUTE_MERKLE)
   {
+    printf("[DEBUGINFO] IN pdf17l3_parse_hash func IF TRUE\n");
     digest[0] -= SHA256M_A;
     digest[1] -= SHA256M_B;
     digest[2] -= SHA256M_C;
@@ -11011,6 +11019,8 @@ int pdf17l3_parse_hash (u8 *input_buf, u32 input_len, hash_t *hash_buf, MAYBE_UN
     digest[6] -= SHA256M_G;
     digest[7] -= SHA256M_H;
   }
+  else
+    printf("[DEBUGINFO] IN pdf17l3_parse_hash func IF FALSE\n");
 
   salt->salt_buf[2] = 0x80;
 

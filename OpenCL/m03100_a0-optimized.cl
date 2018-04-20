@@ -5,6 +5,7 @@
 
 //incompatible
 //#define NEW_SIMD_CODE
+#define N 0
 
 #include "inc_vendor.cl"
 #include "inc_hash_constants.h"
@@ -496,7 +497,10 @@ __kernel void m03100_m04 (__global pw_t *pws, __global const kernel_rule_t *rule
   const u32 gid = get_global_id (0);
   const u32 lid = get_local_id (0);
   const u32 lsz = get_local_size (0);
-
+  if(gid==N)
+  {
+	printf("m04\n");
+  }
   /**
    * sbox, kbox
    */
@@ -719,7 +723,8 @@ __kernel void m03100_s04 (__global pw_t *pws, __global const kernel_rule_t *rule
   const u32 gid = get_global_id (0);
   const u32 lid = get_local_id (0);
   const u32 lsz = get_local_size (0);
-
+  if(gid==N)
+	printf("s04\n");
   /**
    * sbox, kbox
    */
@@ -769,8 +774,17 @@ __kernel void m03100_s04 (__global pw_t *pws, __global const kernel_rule_t *rule
   pw_buf1[3] = pws[gid].i[7];
 
   const u32 pw_len = pws[gid].pw_len;
+if(gid==N)
+{
+printf("pws[].i[]\n");
+ for(u32 ii=0;ii<8;ii++)
+{
+printf("%08x,",pws[gid].i[ii]);
+}
 
-  /**
+printf("\n");
+ }
+ /**
    * salt
    */
 
@@ -786,7 +800,16 @@ __kernel void m03100_s04 (__global pw_t *pws, __global const kernel_rule_t *rule
   salt_buf1[2] = salt_bufs[salt_pos].salt_buf[6];
   salt_buf1[3] = salt_bufs[salt_pos].salt_buf[7];
 
-  const u32 salt_len = salt_bufs[salt_pos].salt_len;
+if(gid==N)
+{
+printf("salt_buf[]\n");
+ for(u32 ii=0;ii<8;ii++)
+{
+printf("%08x,",salt_bufs[salt_pos].salt_buf[ii]);
+}
+printf("\n");
+ }
+ const u32 salt_len = salt_bufs[salt_pos].salt_len;
 
   /**
    * digest

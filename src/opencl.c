@@ -662,6 +662,7 @@ int hc_clEnqueueReadBuffer (hashcat_ctx_t *hashcat_ctx, cl_command_queue command
 
   OCL_PTR *ocl = opencl_ctx->ocl;
 
+  printf("\n[DEBUGINFO] get pw\n");
   const cl_int CL_err = ocl->clEnqueueReadBuffer (command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, event);
 
   if (CL_err != CL_SUCCESS)

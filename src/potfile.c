@@ -268,6 +268,10 @@ void potfile_write_append (hashcat_ctx_t *hashcat_ctx, const char *out_buf, u8 *
   lock_file (potfile_ctx->fp);
 
   fprintf (potfile_ctx->fp, "%s" EOL, tmp_buf);
+  printf("\n[DEBUGINFO]:tmp_buf=%s\n",tmp_buf);
+  printf("\n[DEBUGINFO]:out_buf=%s\n",out_buf);
+  printf("\n[DEBUGINFO]:plain_ptr=%s\n",plain_ptr);
+
 
   fflush (potfile_ctx->fp);
 
